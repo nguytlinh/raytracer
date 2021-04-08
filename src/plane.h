@@ -12,8 +12,8 @@ public:
 
    virtual bool hit(const ray& r, hit_record& rec) const override
    {
-      // todo
-      return false;
+       
+       return false;
    }
 
 public:
@@ -21,5 +21,7 @@ public:
    glm::vec3 n;
    std::shared_ptr<material> mat_ptr;
 };
+
+
 
 #endif
