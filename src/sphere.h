@@ -19,23 +19,28 @@ public:
    std::shared_ptr<material> mat_ptr;
 };
 
-bool sphere::hit(const ray& r, hit_record& rec) const {
-   glm::vec3 oc = r.origin() - center;
-   float a = glm::dot(r.direction(), r.direction());
-   float half_b = glm::dot(oc, r.direction());
-   float c = glm::length2(oc) - radius*radius;
+/*bool sphere::hit(const ray& r, hit_record& rec) const {
+   glm::vec3 el = r.origin() - center;
+   glm::vec3 d = normalize(r.direction());
+   float len = glm::length(r.direction());
 
-   float discriminant = half_b*half_b - a*c;
-   if (discriminant < 0) return false;
-   float sqrtd = sqrt(discriminant);
+   float s = glm::dot(el, d);
+   float el_sqr = glm::dot(el, el);
+   float r_sqr = radius * radius;
 
-   float t = (-half_b - sqrtd) / a;
-   if (t < 0) t = (-half_b + sqrtd) / a;
-   if (t < 0) return false;
+   if (s < 0 && el_sqr > r_sqr) return -1;
+
+   float m_sqr = el_sqr - s * s;
+   if (m_sqr > r_sqr) return - 1;
+
+   float q = sqrt(r_sqr - m_sqr);
+   float t = 1.0f;
+   if (el_sqr > r_sqr) t = s - q;
+   else t = s + q;
 
    // save relevant data in hit record
-   rec.t = t; // save the time when we hit the object
-   rec.p = r.at(t); // ray.origin + t * ray.direction
+   rec.t = t/len; // save the time when we hit the object
+   rec.p = r.at(t/len); // ray.origin + t * ray.direction
    rec.mat_ptr = mat_ptr; 
 
    // save normal
@@ -43,6 +48,32 @@ bool sphere::hit(const ray& r, hit_record& rec) const {
    rec.set_face_normal(r, outward_normal);
 
    return true;
+}*/
+
+bool sphere::hit(const ray& r, hit_record& rec) const {
+    glm::vec3 oc = r.origin() - center;
+    float a = glm::dot(r.direction(), r.direction());
+    float half_b = glm::dot(oc, r.direction());
+    float c = glm::length2(oc) - radius * radius;
+
+    float discriminant = half_b * half_b - a * c;
+    if (discriminant < 0) return false;
+    float sqrtd = sqrt(discriminant);
+
+    float t = (-half_b - sqrtd) / a;
+    if (t < 0) t = (-half_b + sqrtd) / a;
+    if (t < 0) return false;
+
+    // save relevant data in hit record
+    rec.t = t; // save the time when we hit the object
+    rec.p = r.at(t); // ray.origin + t * ray.direction
+    rec.mat_ptr = mat_ptr;
+
+    // save normal
+    glm::vec3 outward_normal = normalize(rec.p - center); // compute unit length normal
+    rec.set_face_normal(r, outward_normal);
+
+    return true;
 }
 
 #endif
