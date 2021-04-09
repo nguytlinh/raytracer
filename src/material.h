@@ -63,8 +63,16 @@ public:
   virtual bool scatter(const ray& r_in, const hit_record& hit, 
      glm::color& attenuation, ray& scattered) const override 
   {
-     // todo
-     attenuation = glm::color(0);
+     using namespace glm;
+     color ia = ka * ambientColor;
+     vec3 L = normalize(lightPos - hit.p);
+     vec3 n = normalize(hit.normal);
+     float Ln = fmax(0, dot(L, n));
+     color id = kd * Ln * diffuseColor;
+
+     vec3 reflect = 2 * Ln * n - L;
+     color is = ks * specColor * pow(dot(reflect, normalize(viewPos - hit.p)), shininess);
+     attenuation = ia + id + is;
      return false;
   }
 
@@ -89,7 +97,7 @@ public:
    { 
        using namespace glm;
        vec3 reflected = reflect(normalize(r_in.direction()), rec.normal);
-       scattered = ray(rec.p, reflected + fuzz*random_unit_vector());
+       scattered = ray(rec.p, reflected + fuzz*random_unit_sphere());
        attenuation = albedo;
        return (dot(scattered.direction(), rec.normal) > 0);
    }
