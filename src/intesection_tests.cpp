@@ -109,13 +109,13 @@ int main(int argc, char** argv)
    // TODO: Your tests here
 
    plane p(point3(0, 0, 0), vec3(0, 0, 0), empty);
-   test_plane(p, ray(point3(0, 0, 0), vec3(0, 0, 0)), true, hit_record{ vec3(0,0,0),vec3(0,0,0),0,true, empty });
+   test_plane(p, ray(point3(0, 0, 0), vec3(0, 0, 0)), true, hit_record{ vec3(0,0,0),vec3(0,0,0),0,true, empty});
    test_plane(p, ray(point3(0, 0, 0), vec3(0, 0, 0)), false, none);
    test_plane(p, ray(point3(0, 0, 0), vec3(0, 0, 0)), false, none);
 
 
    triangle t(point3(0, 0, 0), point3(0,0,0), point3(0, 0, 0), empty);
-   test_triangle(t, ray(point3(0, 0, 0), vec3(0, 0, 0)), true, hit_record{ vec3(0,0,0),vec3(0,0,0),0,true, empty });
+   test_triangle(t, ray(point3(0, 0, 0), vec3(0, 0, 0)), true, hit_record{ vec3(0,0,0),vec3(0,0,0),0,true, empty});
    test_triangle(t, ray(point3(0, 0, 0), vec3(0, 0, 0)), false, none);
    test_triangle(t, ray(point3(0, 0, 0), vec3(0, 0, 0)), false, none);
    test_triangle(t, ray(point3(0, 0, 0), vec3(0, 0, 0)), false, none);
