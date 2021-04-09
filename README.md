@@ -41,3 +41,9 @@ raytracer/build $ ../bin/gradient
 raytracer/build $ ../bin/normals
 ```
 
+Shading: Phong, Glass, Lambertian, Metal <br />
+![materials](https://user-images.githubusercontent.com/75322388/114129783-42b7ee00-98cd-11eb-9793-a7e4159b1ab6.png) <br />
+<br />
+Unique feature: defocus blur <br />
+Unique image:
+
