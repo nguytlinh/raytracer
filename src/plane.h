@@ -12,8 +12,25 @@ public:
 
    virtual bool hit(const ray& r, hit_record& rec) const override
    {
-       
-       return false;
+       using namespace glm;
+
+       float len = length(r.direction());
+       vec3 d = r.direction() / len;
+       float den = dot(n, d);
+
+       if (den == 0.0f) return false;
+
+       vec3 v = a - r.origin();
+       float num = dot(v, n);
+       float t = num / den;
+       if (t < 0) return false;
+           
+       rec.t = t / len;
+       rec.p = r.at(rec.t);
+       rec.mat_ptr = mat_ptr;
+       rec.set_face_normal(r, n);
+
+       return true;
    }
 
 public:
